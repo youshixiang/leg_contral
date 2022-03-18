@@ -1,6 +1,6 @@
 /*
 同步支腿控制程序
-加了电流测量打印输出
+加了电流
  */
 #include <ESP8266WiFi.h>
 // #include <WiFiClient.h>
