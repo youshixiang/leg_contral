@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <style>
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type=button],
+        input[type=submit],
+        input[type=reset] {
+            background-color: #4faa52;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <form name='input' action='/cp' method='POST'>
+        支腿编号: <br>
+        <input width: 100%; type='text' name='ln'><br>
+        接地负载电流: <br>
+        <input type='text' name='fc'><br>
+        举升最大电流:<br>
+        <input type='text' name='uc'><br>
+        回收最大电流:<br>
+        <input type='text' name='dc'><br>
+        <input type='submit' value='设置'>
+    </form>
+</body>
+
+</html>

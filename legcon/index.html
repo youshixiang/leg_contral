@@ -1,0 +1,295 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+        div {
+            min-width: 320px;
+            max-width: 760px;
+            height: 300px;
+            border: 1px solid blue;
+
+
+        }
+
+        table {
+            width: 100%;
+            border-radius: 5px;
+
+            border: 1px solid blue;
+        }
+
+        table[tr] {
+
+            border-radius: 5px;
+            align: "center";
+            valign: "middle";
+            border: 1px solid blue;
+        }
+
+        .button {
+            display: inline-block;
+
+            font-size: 3rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: blue;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+
+
+        .button:active {
+            background-color: red;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    </style>
+
+<body>
+
+    <h4 id='fczt' align="center" valign="center" style="width:95%;height:1%;margin-left:3%"> 方舱状态数据</h4>
+    <hr HRalign=center style="width:95%;margin-left:3%" color=blue border=1px>
+    <table border="10" style="width:95%;margin-left:3%">
+        <tr>
+            <th>X轴旋转角度</th>
+            <th>y轴旋转角度</th>
+        </tr>
+        <tr align="center" valign="middle">
+            <td id='x'>-</td>
+            <td id='y'>-</td>
+        </tr>
+    </table>
+    <table border="10" style="width:95%;margin-left:3%">
+        <tr>
+            <th>参数名称</th>
+            <th>1号支腿</th>
+            <th>2号支腿</th>
+            <th>3号支腿</th>
+            <th>4号支腿</th>
+        </tr>
+        <tr align="center" valign="middle">
+            <td>连接数/信号强度</td>
+            <td id='RSSI1'>-</td>
+            <td id='RSSI2'>-</td>
+            <td id='RSSI3'>-</td>
+            <td id='RSSI4'>-</td>
+        </tr>
+        <tr align="center" valign="middle">
+            <td>负载电流(mA)</td>
+            <td id='CU1'>-</td>
+            <td id='CU2'>-</td>
+            <td id='CU3'>-</td>
+            <td id='CU4'>-</td>
+        </tr>
+        </tr>
+        <tr align="center" valign="middle">
+            <td>举升高度(cm)</td>
+            <td id='LONG1'>-</td>
+            <td id='LONG2'>-</td>
+            <td id='LONG3'>-</td>
+            <td id='LONG4'>-</td>
+        </tr>
+        </tr>
+        <tr align="center" valign="middle">
+            <td>操作状态</td>
+            <td id='OP1'>-</td>
+            <td id='OP2'>-</td>
+            <td id='OP3'>-</td>
+            <td id='OP4'>-</td>
+        </tr>
+        </tr>
+        <tr align="center" valign="middle">
+            <td>运行状态</td>
+
+            <td id='STATUS1'>-</td>
+            <td id='STATUS2'>-</td>
+            <td id='STATUS3'>-</td>
+            <td id='STATUS4'>-</td>
+        </tr>
+    </table>
+    <hr HRalign=center style="width:95%;margin-left:3%" color=blue border=1px>
+    <button id="stop" type="button" class="button" style="width:94%;height:28%;margin-left:3%">停止按钮</button>
+    <br></br>
+    <button id="all_up" type="button" class="button" style="width:47%;height:18%;margin-left:3%">自动举升</button>
+    <button id="all_down" type="button" class="button" style="width:46%;height:18%;left:55%">自动回收</button><br><br>
+
+    <button id="oneup" type="button" class="button" style="width:23%;height:10%;margin-left:3%">1号举升</button>
+
+    <button id="twoup" type="button" class="button" style="width:23%;height:10%;">2号举升</button>
+    <button id="threeup" type="button" class="button" style="width:23%;height:10%;left:60%">3号举升</button>
+
+    <button id="frouup" type="button" class="button" style="width:23%;height:10%;">4号举升</button>
+    <br><br>
+    <button id="onedown" type="button" class="button" style="width:23%;height:10%;margin-left:3%">1号回收</button>
+
+    <button id="twodown" type="button" class="button" style="width:23%;height:10%;">2号回收</button>
+
+    <button id="threedown" type="button" class="button" style="width:23%;height:10%;">3号回收</button>
+
+    <button id="froudown" type="button" class="button" style="width:23%;height:10%;">4号回收</button>
+</body>
+
+<script>
+
+
+    var c = 0;
+    var t;
+    var timer_is_on = 0;
+    var RSSI = new Array("RSSI1", "RSSI2", "RSSI3", "RSSI4");
+    var CU = new Array("CU1", "CU2", "CU3", "CU4");
+    var LONG = new Array("LONG1", "LONG2", "LONG3", "LONG4");
+    var OP = new Array("OP1", "OP2", "OP3", "OP4");
+    var STATUS = new Array("STATUS1", "STATUS2", "STATUS3", "STATUS4");
+    var para_arry = new Array("x", "y", "RSSI1", "RSSI2", "RSSI3", "RSSI4", "CU1", "CU2", "CU3", "CU4", "LONG1", "LONG2", "LONG3", "LONG4", "OP1", "OP2", "OP3", "OP4", "STATUS1", "STATUS2", "STATUS3", "STATUS4");
+    var but_array = new Array("all_up", "all_down", "oneup", "twoup", "threeup", "frouup", "onedown", "twodown", "threedown", "froudown", "stop");
+    var but_lison = new Array();
+    var but_json = {};
+    var on_line_flag = 0;
+    var connection = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
+    function websocketconnection() {
+
+        connection.onopen = function () { connection.send('Connect ' + new Date()); };
+        connection.onerror = function (error) { console.log('WebSocket Error ', error); };
+        connection.onmessage = function (e) {
+            // console.log('Server: ', e.data); 
+            ws_msg_handler(e);
+            on_line_flag = 1;
+        };
+    };
+    var int = self.setInterval("wsrescon()", 200);
+    function wsrescon() {
+        if (on_line_flag == 0) {
+
+            console.log("WS connection");
+            // connection.close();
+            websocketconnection();
+
+        }
+        on_line_flag = 0;
+        var sendtext = "ping";
+        connection.send(sendtext);
+    };
+
+    function btu_onclick() {
+        for (i in but_array) {
+            but_lison[i] = document.getElementById(but_array[i]);
+            var width = but_lison[i].offsetWidth;
+            but_lison[i].style.fontSize = width / 10;
+            console.log('but_array[i]: ', but_array[i]);
+            but_lison[i].onclick = function () {
+                if (but_json[this.id] == "on" || but_json[this.id] == undefined) {
+                    but_json[this.id] = "off";
+                } else {
+                    but_json[this.id] = "on";
+                }
+                var sendtext = '#' + this.id + ":" + but_json[this.id];
+                connection.send(sendtext);
+                console.log('sendtext: ', sendtext);
+                but_style_change(this.id, but_json[this.id]);
+            }
+        }
+    }
+    function but_style_change(id, switchstatus) {
+        var buttonValue = document.getElementById(id).innerHTML;
+        buttonValue = buttonValue.substring(0, buttonValue.indexOf("("));
+        if (switchstatus == "on") {
+            if (id != "stop") { document.getElementById(id).innerHTML = buttonValue + "(动作)"; }
+
+
+
+            // document.getElementById(id).style.cssText = "background-color:red";
+            // document.getElementById(id).style.cssText += "box-shadow: 0 5px #666";
+            // document.getElementById(id).style.cssText += "transform: translateY(4px)";
+            for (i in but_array) {
+                if (but_array[i] != id && but_array[i] != "stop") {
+                    but_json[but_array[i]] = "off";
+                    var buttonValue = document.getElementById(but_array[i]).innerHTML;
+                    buttonValue = buttonValue.substring(0, buttonValue.indexOf("("));
+                    document.getElementById(but_array[i]).innerHTML = buttonValue + "(停止)";
+                }
+            }
+        }
+        else {
+            // document.getElementById(id).style.cssText = "background-color:blue";
+            // document.getElementById(id).style.cssText += "box-shadow: 0 9px #999";
+            if (id != "stop") { document.getElementById(id).innerHTML = buttonValue + "(停止)"; } else {
+                for (i in but_array) {
+                    if (but_array[i] != id && but_array[i] != "stop") {
+                        but_json[but_array[i]] = "off";
+                        var buttonValue = document.getElementById(but_array[i]).innerHTML;
+                        buttonValue = buttonValue.substring(0, buttonValue.indexOf("("));
+                        document.getElementById(but_array[i]).innerHTML = buttonValue + "(停止)";
+                    }
+                }
+            }
+        }
+    }
+
+    window.onload = function () {
+        //每1秒刷新时间
+        for (i in but_array) {
+            but_json[but_array[i]] = "off";
+            var buttonValue = document.getElementById(but_array[i]).innerHTML;
+            // buttonValue=buttonValue.substring(0,buttonValue.indexOf("("));
+            if (but_array[i] != "stop") {
+                document.getElementById(but_array[i]).innerHTML = buttonValue + "(停止)";
+            }
+        }
+        timedCount();
+        btu_onclick();
+
+    }
+
+    function ws_msg_handler(e) {
+        var str = e.data.substring(e.data.indexOf("{"), e.data.lastIndexOf("}") + 1);
+        // console.log(str);
+        // console.log(JSON.parse(str));
+        var jsonObject;
+        if (e.data.lastIndexOf("msgtype") > 0) {
+            jsonObject = JSON.parse(str);
+
+            if (jsonObject.msgtype == "status_msg") {
+                for (x = 1; x < 5; x++) {
+                    for (var i in jsonObject["leg" + x]) {
+
+                        var a = para_arry.indexOf(i + x)
+                        if (a > -1) {
+                            document.getElementById(i + x).innerHTML = jsonObject["leg" + x][i];
+                        }
+                    }
+                }
+            }
+
+            if (jsonObject.msgtype == "alert") {
+                window.alert(jsonObject.alert);
+            }
+        }
+    }
+    function timedCount() {
+        for (i in para_arry) {
+            console.log(para_arry[i]);
+            // document.getElementById(para_arry[i]).innerHTML = c;
+        }
+        // connection.send(sendtext);
+        c = c + 1;
+        // t = setTimeout("timedCount()", 100);
+    }
+    function doTimer() {
+        if (!timer_is_on) {
+            timer_is_on = 1;
+            timedCount();
+        }
+    }
+
+</script>
+
+
+</html>
