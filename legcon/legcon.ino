@@ -1,4 +1,5 @@
 /*
+同步支腿控制程序
  */
 #include <ESP8266WiFi.h>
 // #include <WiFiClient.h>
